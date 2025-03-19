@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
+import jsPreviewExcel from "@js-preview/excel";
+import '@js-preview/excel/lib/index.css'
 
 // 文档页面类型定义
 interface DocumentPage {
@@ -32,6 +34,20 @@ export default function DocumentViewer() {
   const { id } = useParams();
   const [currentPage, setCurrentPage] = useState(0);
   const [activeTab, setActiveTab] = useState<"details" | "history">("details");
+  const previewerRef = useRef(null);
+
+  useEffect(() => {
+    if (previewerRef.current) return;
+    //初始化时指明要挂载的父元素Dom节点
+    const myExcelPreviewer = jsPreviewExcel.init(document.getElementById('view-container'));
+    previewerRef.current = myExcelPreviewer;
+    //传递要预览的文件地址即可
+    myExcelPreviewer.preview('https://501351981.github.io/vue-office/examples/dist/static/test-files/test.xlsx').then(res => {
+      console.log('预览完成');
+    }).catch(e => {
+      console.log('预览失败', e);
+    })
+  }, []);
 
   // 模拟文档数据（实际中应通过API请求获取）
   const documentMeta: DocumentMeta = {
@@ -102,42 +118,9 @@ export default function DocumentViewer() {
       {/* 主要内容区域 */}
       <div className="flex flex-1 overflow-hidden">
         {/* 文档内容区域 */}
-        <div className="flex-1 overflow-auto bg-gray-100 relative">
+        <div className="flex-1 overflow-auto bg-gray-100 flex relative">
           {/* 左侧翻页按钮 */}
-          <button 
-            onClick={goToPreviousPage}
-            disabled={currentPage === 0}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-          </button>
-
-          {/* 文档内容 */}
-          <div className="max-w-4xl mx-auto py-6 px-4">
-            <div className="bg-white shadow-md">
-              <img
-                src={documentPages[currentPage].imageUrl}
-                alt={`页面 ${currentPage + 1}`}
-                className="w-full object-contain"
-              />
-            </div>
-            <div className="text-center mt-2 text-sm text-gray-500">
-              {currentPage + 1} / {totalPages}
-            </div>
-          </div>
-
-          {/* 右侧翻页按钮 */}
-          <button 
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages - 1}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-            </svg>
-          </button>
+          <div id="view-container" className="flex-1"></div>
         </div>
 
         {/* 文档信息侧边栏 */}

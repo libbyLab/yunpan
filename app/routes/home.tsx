@@ -195,10 +195,11 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {sortedDocuments.map((doc) => {
             const { icon, color } = getFileIcon(doc.title);
+            const doctype = doc.title.split('.')[1];
             return (
               <a 
                 key={doc.id} 
-                href={`/document/${doc.id}`} 
+                href={`/${doctype}/${doc.id}`} 
                 className="block border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
               >
                 <div className={`aspect-square ${color} text-white flex items-center justify-center`}>
@@ -231,10 +232,11 @@ export default function Home() {
           <div className="divide-y">
             {sortedDocuments.map((doc) => {
               const { icon, color } = getFileIcon(doc.title);
+              const doctype = doc.title.split('.')[1];
               return (
                 <a 
                   key={doc.id} 
-                  href={`/document/${doc.id}`} 
+                  href={`/${doctype}/${doc.id}`} 
                   className="grid grid-cols-12 py-3 px-4 hover:bg-gray-50 items-center"
                 >
                   <div className="col-span-6 flex items-center space-x-3">
