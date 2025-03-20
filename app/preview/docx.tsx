@@ -62,16 +62,6 @@ export default function DocumentViewer() {
     { id: "page-5", imageUrl: "/images/doc-1-page-5.jpg" },
   ];
 
-  const totalPages = documentPages.length;
-
-  function goToPreviousPage() {
-    setCurrentPage((prev) => Math.max(0, prev - 1));
-  }
-
-  function goToNextPage() {
-    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
-  }
-
   return (
     <div className="flex flex-col h-screen bg-white">
       <DocumentHeader title={documentMeta.title} />
