@@ -72,6 +72,17 @@ export const pptxView = (url, container, previewerRef, callback) => {
   });
 };
 
+export const imageView = (url, container, previewerRef, callback) => {
+  const img = document.createElement('img');
+  img.src = url;
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.objectFit = 'contain';
+  container.appendChild(img);
+  if (!!callback) callback(img);
+  if (!!previewerRef) previewerRef.current = img;
+};
+
 /**
  * 根据url 获取扩展名
  * @param {*} url 文件url
@@ -95,7 +106,8 @@ const viewTypes = {
   docx: docxView,
   pptx: pptxView,
   pdf: pdfView,
-  xlsx: xlsxView
+  xlsx: xlsxView,
+  image: imageView,
 };
 
 export const preView = (type, url, container, previewerRef, callback) => {

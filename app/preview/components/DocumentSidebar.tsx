@@ -23,6 +23,7 @@ const typeName = {
   'pptx': 'PPT文档',
   'docx': 'Word文档',
   'pdf': 'PDF文档',
+  'image': '图片',
 }
 
 export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) {
