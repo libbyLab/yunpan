@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router';
 
 interface DocumentMeta {
   id: string;
@@ -17,8 +18,17 @@ interface DocumentSidebarProps {
   documentMeta: DocumentMeta;
 }
 
+const typeName = {
+  'xlsx': 'Excel文档',
+  'pptx': 'PPT文档',
+  'docx': 'Word文档',
+  'pdf': 'PDF文档',
+}
+
 export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) {
   const [activeTab, setActiveTab] = useState<"details" | "history">("details");
+  const location = useLocation();
+  const docData = location.state?.docData;
 
   return (
     <div className="w-80 border-l overflow-auto">
@@ -44,8 +54,13 @@ export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) 
           <div className="space-y-6">
             {/* PDF图标和文件名 */}
             <div className="flex flex-col items-center">
-              <div className="w-24 h-24 bg-red-500 text-white rounded-lg flex items-center justify-center mb-2">
-                <span className="text-2xl font-bold">PDF</span>
+              <div className="w-32 h-32 text-white rounded-lg flex items-center justify-center mb-2" style={{
+                backgroundImage: `url(${new URL(`../images/${docData.type}.svg`, import.meta.url).href})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center'
+              }}>
+                
               </div>
               <h2 className="text-center font-medium">{documentMeta.title}</h2>
             </div>
@@ -66,7 +81,7 @@ export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) 
               </div>
               <div className="flex">
                 <span className="text-gray-500 w-20">类型：</span>
-                <span>{documentMeta.type}</span>
+                <span>{ typeName[documentMeta.type]||'' }</span>
               </div>
               <div className="flex">
                 <span className="text-gray-500 w-20">大小：</span>

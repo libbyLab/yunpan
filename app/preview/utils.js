@@ -98,7 +98,6 @@ const viewTypes = {
   xlsx: xlsxView
 };
 
-export const preView = (url, container, previewerRef, callback) => {
-  const docType = getFileExtension(url);
-  viewTypes[docType](url, container, previewerRef, callback);
+export const preView = (type, url, container, previewerRef, callback) => {
+  viewTypes[type](url, container, previewerRef, callback);
 };

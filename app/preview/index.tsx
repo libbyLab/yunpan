@@ -33,7 +33,7 @@ export function meta() {
 
 export default function DocumentViewer() {
   const location = useLocation();
-  const docData = location.state?.docData;
+  const docData = location.state?.docData || {};
   const previewerRef = useRef(null);
   
   // 模拟文档数据（实际中应通过API请求获取）
@@ -41,7 +41,8 @@ export default function DocumentViewer() {
     if (previewerRef.current) return;
     const container = document.getElementById('view-container');
     if (!container) return;
-    preView(docData.url, container, previewerRef)
+    const { url, type } = docData;
+    preView(type, url, container, previewerRef)
   }, []);
 
   return (
