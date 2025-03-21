@@ -1,0 +1,6 @@
+.doc-detail {
+  font-size: 12px;
+  div label {
+    color: rgba(0, 0, 0, .4);
+  }
+}

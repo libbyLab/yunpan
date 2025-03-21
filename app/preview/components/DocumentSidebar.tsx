@@ -32,10 +32,17 @@ export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) 
   const docData = location.state?.docData;
 
   return (
-    <div className="w-80 border-l overflow-auto">
+    <div className="w-64 overflow-auto" style = {{
+      background: '#f7f9fc',
+      boxShadow: '-1px 0 2px 0 rgba(0,0,0,.1)',
+      borderLeft: '1px solid #f6f6f6',
+      zIndex: 1
+    }}>
       <div className="py-4 px-4">
         {/* 切换选项卡 */}
-        <div className="flex border-b mb-4">
+        <div className="flex border-b mb-4" style={{
+          fontSize: 13
+        }}>
           <button 
             className={`pb-2 px-4 ${activeTab === 'details' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
             onClick={() => setActiveTab('details')}
@@ -52,48 +59,47 @@ export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) 
 
         {/* 文档信息 */}
         {activeTab === 'details' && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* PDF图标和文件名 */}
             <div className="flex flex-col items-center">
-              <div className="w-32 h-32 text-white rounded-lg flex items-center justify-center mb-2" style={{
+              <div className="w-32 h-32 text-white rounded-lg flex items-center justify-center" style={{
                 backgroundImage: `url(${new URL(`../images/${docData.type}.svg`, import.meta.url).href})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center'
               }}>
-                
               </div>
               <h2 className="text-center font-medium">{documentMeta.title}</h2>
             </div>
 
             {/* 文档详情信息 */}
-            <div className="space-y-3">
+            <div className="space-y-2.5 doc-detail">
               <div className="flex">
-                <span className="text-gray-500 w-20">创建人：</span>
+                <label className="w-16 mb-6">创建人：</label>
                 <span>{documentMeta.creator}</span>
               </div>
               <div className="flex">
-                <span className="text-gray-500 w-20">空间位置：</span>
+                <label className="w-16">空间位置：</label>
                 <span>{documentMeta.space}</span>
               </div>
               <div className="flex">
-                <span className="text-gray-500 w-20">文件路径：</span>
+                <label className="w-16">文件路径：</label>
                 <span>{documentMeta.path}</span>
               </div>
               <div className="flex">
-                <span className="text-gray-500 w-20">类型：</span>
+                <label className="w-16">类型：</label>
                 <span>{ typeName[documentMeta.type]||'' }</span>
               </div>
               <div className="flex">
-                <span className="text-gray-500 w-20">大小：</span>
+                <label className="w-16">大小：</label>
                 <span>{documentMeta.size}</span>
               </div>
               <div className="flex">
-                <span className="text-gray-500 w-20">创建时间：</span>
+                <label className="w-16">创建时间：</label>
                 <span>{documentMeta.createTime}</span>
               </div>
               <div className="flex">
-                <span className="text-gray-500 w-20">修改时间：</span>
+                <label className="w-16">修改时间：</label>
                 <span>{documentMeta.modifyTime}</span>
               </div>
             </div>

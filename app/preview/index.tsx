@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router";
 import { preView } from './utils';
 import DocumentHeader from "./components/DocumentHeader";
 import DocumentSidebar from "./components/DocumentSidebar";
+import './preview.css';
 
 // 文档页面类型定义
 interface DocumentPage {
@@ -42,7 +43,7 @@ export default function DocumentViewer() {
     const container = document.getElementById('view-container');
     if (!container) return;
     const { url, type } = docData;
-    preView(type, url, container, previewerRef)
+    preView(type,url, container, previewerRef)
   }, []);
 
   return (
@@ -52,7 +53,7 @@ export default function DocumentViewer() {
       {/* 主要内容区域 */}
       <div className="flex flex-1 overflow-hidden">
         {/* 文档内容区域 */}
-        <div className="flex-1 overflow-auto bg-gray-100 flex relative">
+        <div className="flex-1 overflow-auto bg-gray-50 flex relative">
           {/* 左侧翻页按钮 */}
           <div id="view-container" className="flex-1"></div>
         </div>
