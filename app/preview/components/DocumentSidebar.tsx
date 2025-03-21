@@ -40,17 +40,17 @@ export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) 
     }}>
       <div className="py-4 px-4">
         {/* 切换选项卡 */}
-        <div className="flex border-b mb-4" style={{
+        <div className="flex mb-4 justify-center" style={{
           fontSize: 13
         }}>
           <button 
-            className={`pb-2 px-4 ${activeTab === 'details' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+            className={`pb-2 px-4 border-b-2 ${activeTab === 'details' ? 'border-blue-500 text-blue-500' : 'text-gray-500 border-gray-300'}`}
             onClick={() => setActiveTab('details')}
           >
             详细信息
           </button>
           <button 
-            className={`pb-2 px-4 ${activeTab === 'history' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500'}`}
+            className={`pb-2 px-4 border-b-2 ${activeTab === 'history' ? ' border-bue-500 text-blue-500' : 'text-gray-500 border-gray-300'}`}
             onClick={() => setActiveTab('history')}
           >
             历史版本
