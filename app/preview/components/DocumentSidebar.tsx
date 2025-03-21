@@ -80,10 +80,6 @@ export default function DocumentSidebar({ documentMeta }: DocumentSidebarProps) 
                 <span className="text-gray-500 w-20">修改时间：</span>
                 <span>{documentMeta.modifyTime}</span>
               </div>
-              <div className="flex">
-                <span className="text-gray-500 w-20">标签：</span>
-                <button className="text-blue-500 text-sm">添加标签</button>
-              </div>
             </div>
           </div>
         )}

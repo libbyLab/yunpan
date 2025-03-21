@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import { useState } from "react";
-
+import { useNavigate } from 'react-router'
 // 文档列表项的类型定义
 interface Document {
   id: string;
@@ -9,6 +9,11 @@ interface Document {
   creator: string;
   size: string;
   type: string;
+  url: string;
+  space: string;
+  path: string;
+  createTime: string;
+  modifyTime: string;
 }
 
 export function meta({}: Route.MetaArgs) {
@@ -22,6 +27,17 @@ export default function Home() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortField, setSortField] = useState<"name" | "date" | "size">("date");
   const [isAscending, setIsAscending] = useState(false);
+  let navigate = useNavigate();
+  
+  const handlePreview = (docData: Document) => {
+    navigate(`/preview/${docData.id}`, {
+      state: {
+        docData: {
+          ...docData
+        }
+      }
+    });
+  };
 
   // 模拟文档列表数据
   const documents: Document[] = [
@@ -31,7 +47,12 @@ export default function Home() {
       lastModified: "2023-03-18 20:41:58", 
       creator: "wlj",
       size: "4.6 MB",
-      type: "PDF文档"
+      type: "PDF文档",
+      url: 'https://501351981.github.io/vue-office/examples/dist/static/test-files/test.pdf',
+      space: "个人空间",
+      path: "全部/",
+      createTime: "2023-03-18 20:41:58",
+      modifyTime: "2023-03-18 20:41:58",
     },
     { 
       id: "2", 
@@ -39,7 +60,12 @@ export default function Home() {
       lastModified: "2023-03-15 10:25:33", 
       creator: "张三",
       size: "2.1 MB",
-      type: "Word文档"
+      type: "Word文档",
+      url: 'https://501351981.github.io/vue-office/examples/dist/static/test-files/test.docx',
+      space: "个人空间",
+      path: "全部/",
+      createTime: "2023-03-18 20:41:58",
+      modifyTime: "2023-03-18 20:41:58",
     },
     { 
       id: "3", 
@@ -47,7 +73,11 @@ export default function Home() {
       lastModified: "2023-03-10 14:32:45", 
       creator: "李四",
       size: "1.8 MB",
-      type: "Excel表格"
+      type: "Excel表格", url: 'https://501351981.github.io/vue-office/examples/dist/static/test-files/test.xlsx',
+      space: "个人空间",
+      path: "全部/",
+      createTime: "2023-03-18 20:41:58",
+      modifyTime: "2023-03-18 20:41:58",
     },
     { 
       id: "4", 
@@ -55,16 +85,13 @@ export default function Home() {
       lastModified: "2023-03-05 09:15:22", 
       creator: "王五",
       size: "5.3 MB",
-      type: "PowerPoint"
+      type: "PowerPoint",
+      url: 'https://501351981.github.io/vue-office/examples/dist/static/test-files/test.pptx',
+      space: "个人空间",
+      path: "全部/",
+      createTime: "2023-03-18 20:41:58",
+      modifyTime: "2023-03-18 20:41:58",
     },
-    { 
-      id: "5", 
-      title: "产品设计图.jpg", 
-      lastModified: "2023-03-01 16:48:10", 
-      creator: "wlj",
-      size: "8.2 MB",
-      type: "图片"
-    }
   ];
 
   // 按照排序字段和顺序对文档排序
@@ -195,11 +222,10 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {sortedDocuments.map((doc) => {
             const { icon, color } = getFileIcon(doc.title);
-            const doctype = doc.title.split('.')[1];
             return (
-              <a 
+              <div
                 key={doc.id} 
-                href={`/${doctype}/${doc.id}`} 
+                onClick={() => handlePreview(doc)}
                 className="block border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
               >
                 <div className={`aspect-square ${color} text-white flex items-center justify-center`}>
@@ -215,7 +241,7 @@ export default function Home() {
                     <span>{doc.creator}</span>
                   </div>
                 </div>
-              </a>
+              </div>
             );
           })}
         </div>
@@ -232,11 +258,10 @@ export default function Home() {
           <div className="divide-y">
             {sortedDocuments.map((doc) => {
               const { icon, color } = getFileIcon(doc.title);
-              const doctype = doc.title.split('.')[1];
               return (
-                <a 
+                <div
                   key={doc.id} 
-                  href={`/${doctype}/${doc.id}`} 
+                  onClick={() => handlePreview(doc)}
                   className="grid grid-cols-12 py-3 px-4 hover:bg-gray-50 items-center"
                 >
                   <div className="col-span-6 flex items-center space-x-3">
@@ -251,7 +276,7 @@ export default function Home() {
                   <div className="col-span-2 text-sm text-gray-600">{doc.creator}</div>
                   <div className="col-span-1 text-sm text-gray-600">{doc.size}</div>
                   <div className="col-span-1 text-sm text-gray-600">{doc.type}</div>
-                </a>
+                </div>
               );
             })}
           </div>
