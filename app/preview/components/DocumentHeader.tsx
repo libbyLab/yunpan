@@ -15,7 +15,7 @@ export default function DocumentHeader({ title }: DocumentHeaderProps) {
         <a href="/" className="text-gray-600 hover:text-gray-900 block h-6 w-6" style={{
           backgroundImage: `url(${new URL(`../images/home.svg`, import.meta.url).href})`,
         }}></a>
-        <span className="text-gray-900 font-medium">{title}</span>
+        <span className="text-gray-900 text-[14px]">{title}</span>
       </div>
       <div className="flex items-center space-x-2">
         {/* <button className="bg-blue-600 text-white px-4 py-1 rounded">
